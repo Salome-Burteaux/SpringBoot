@@ -1,5 +1,7 @@
-package com.example.exercie1;
+package com.example.exercie1.Service;
 
+import com.example.exercie1.UserDao;
+import com.example.exercie1.UserDto;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

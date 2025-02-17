@@ -1,18 +1,27 @@
-package com.example.exercie1;
+package com.example.exercie1.Controller;
 
+import com.example.exercie1.Entity.UserEntity;
+import com.example.exercie1.UserCreationParams;
+import com.example.exercie1.UserDto;
+import com.example.exercie1.Service.UserService;
+import com.example.exercie1.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
 
+//    @Autowired
+//    UserService userService;
+
     @Autowired
-    UserService userService;
+    UserEntityRepository userEntityRepository;
 
     @PostMapping("/users")
-    public UserCreationParams createUser(@RequestBody UserCreationParams params) {
+    public UserEntity createUser(@RequestBody UserEntity params) {
     // create a new user
-        return new UserCreationParams(params.id, params.email, params.password);
+        UserEntity userEntity = new UserEntity(params.email, params.password);
+        return this.userEntityRepository.save(userEntity);
     }
 
     @GetMapping("/users/{userId}")

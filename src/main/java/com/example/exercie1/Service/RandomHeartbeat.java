@@ -1,5 +1,6 @@
-package com.example.exercie1;
+package com.example.exercie1.Service;
 
+import com.example.exercie1.HeartbeatSensor;
 import org.springframework.stereotype.Service;
 
 @Service

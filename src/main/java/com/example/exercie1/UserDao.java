@@ -15,8 +15,7 @@ public interface UserDao {
     //recherche un utilisateur par son identifiant unique
     Optional<UserDto> findById(@NotNull UUID userId);
 
-    //insère ou met à jour un utilisateur
-    //"upsert" = "update" + "insert"
+    //insère ou met à jour un utilisateur "upsert" = "update" + "insert"
     @NotNull UserDto upsert(@NotNull UserDto user);
 
     //supprime utilisateur par son Id

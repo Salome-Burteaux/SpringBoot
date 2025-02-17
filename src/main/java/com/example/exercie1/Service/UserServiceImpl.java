@@ -1,11 +1,10 @@
-package com.example.exercie1;
+package com.example.exercie1.Service;
 
+import com.example.exercie1.UserCreationParams;
+import com.example.exercie1.UserDao;
+import com.example.exercie1.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Stream;
 
 @Service
 public class UserServiceImpl implements UserService {
