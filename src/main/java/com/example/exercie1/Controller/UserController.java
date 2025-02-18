@@ -4,35 +4,34 @@ import com.example.exercie1.Entity.UserEntity;
 import com.example.exercie1.UserCreationParams;
 import com.example.exercie1.UserDto;
 import com.example.exercie1.Service.UserService;
-import com.example.exercie1.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 public class UserController {
 
-//    @Autowired
-//    UserService userService;
-
     @Autowired
-    UserEntityRepository userEntityRepository;
+    UserService userService;
 
     @PostMapping("/users")
-    public UserEntity createUser(@RequestBody UserEntity params) {
+    public UserEntity createUser(@RequestBody @Validated UserEntity params) {
     // create a new user
-        UserEntity userEntity = new UserEntity(params.email, params.password);
-        return this.userEntityRepository.save(userEntity);
+        UserEntity userEntity = new UserEntity(params.getEmail(), params.getPassword());
+        return userService.createUser(userEntity);
     }
 
     @GetMapping("/users/{userId}")
-    public UserEntity getUser(@PathVariable String userId) {
+    public Optional<UserDto> getUserById(@PathVariable String userId) {
     // get and return user with id 'userId'
-        return this.userEntityRepository.findById(userId).orElse(null);
+        return userService.getUserById(userId);
     }
 
     @PutMapping("/users/edit/{userId}")
-    public UserEntity editUser(@PathVariable String userId, @RequestBody UserCreationParams params) {
-        return this.userEntityRepository.findById(userId).orElse(null);
+    public UserEntity updateUser(@PathVariable String userId, @RequestBody UserCreationParams params) {
+        return null;
     }
 
     @DeleteMapping("/users/delete/{userId}")

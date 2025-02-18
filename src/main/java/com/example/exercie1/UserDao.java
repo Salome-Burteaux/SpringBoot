@@ -1,6 +1,7 @@
 package com.example.exercie1;
 
 
+import com.example.exercie1.Entity.UserEntity;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Optional;
@@ -13,12 +14,12 @@ public interface UserDao {
     @NotNull Stream<UserDto> findAll();
 
     //recherche un utilisateur par son identifiant unique
-    Optional<UserDto> findById(@NotNull UUID userId);
+    Optional<UserEntity> findById(@NotNull String userId);
 
     //insère ou met à jour un utilisateur "upsert" = "update" + "insert"
-    @NotNull UserDto upsert(@NotNull UserDto user);
+    UserEntity upsert(@NotNull UserEntity userEntity);
 
     //supprime utilisateur par son Id
-    void delete(@NotNull UUID userId);
+    void delete(@NotNull String userId);
 
 }

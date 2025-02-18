@@ -11,9 +11,13 @@ import java.util.UUID;
 public class UserEntity {
 
     @Id
-    public String id;
-    public @NotNull @Email String email;
-    public @NotNull String password;
+    private String id;
+    private @NotNull @Email String email;
+    private @NotNull String password;
+
+    public UserEntity() {
+
+    }
 
     public UserEntity(@NotNull @Email String email, @NotNull String password) {
 
@@ -22,7 +26,24 @@ public class UserEntity {
         this.id = UUID.randomUUID().toString();
     }
 
-    public UserEntity() {
-
+    public String getId() {
+        return id;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }

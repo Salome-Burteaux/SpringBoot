@@ -22,5 +22,4 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, String> 
 
     @Override
     void delete(UserEntity entity);
-
 }
