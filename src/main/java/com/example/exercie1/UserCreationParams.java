@@ -1,12 +1,22 @@
 package com.example.exercie1;
 
-public class UserCreationParams {
-    String id;
-    String email;
-    String password;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-    public UserCreationParams(String id, String email, String password) {
-        this.id = id;
+import java.util.UUID;
+
+
+public class UserCreationParams {
+
+    public final String id;
+    public @NotNull @Email String email;
+    public @NotNull String password;
+
+    public UserCreationParams(String email, String password) {
+        this.id = UUID.randomUUID().toString();
         this.email = email;
         this.password = password;
     }
@@ -14,11 +24,6 @@ public class UserCreationParams {
     public String getId() {
 
         return id;
-    }
-
-    public void setId(String id) {
-
-        this.id = id;
     }
 
     public String getEmail() {

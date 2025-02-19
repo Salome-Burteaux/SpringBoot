@@ -17,10 +17,11 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/users")
-    public UserEntity createUser(@RequestBody @Validated UserEntity params) {
+    public UserDto createUser(@RequestBody @Validated UserCreationParams params) {
     // create a new user
-        UserEntity userEntity = new UserEntity(params.getEmail(), params.getPassword());
-        return userService.createUser(userEntity);
+        UserCreationParams userCreationParams = new UserCreationParams(params.getEmail(), params.getPassword());
+        UserDto userDto = new UserDto(params.getId(), params.getEmail());
+        return userService.createUser(userDto, params.getPassword());
     }
 
     @GetMapping("/users/{userId}")
@@ -30,12 +31,12 @@ public class UserController {
     }
 
     @PutMapping("/users/edit/{userId}")
-    public UserEntity updateUser(@PathVariable String userId, @RequestBody UserCreationParams params) {
-        return null;
+    public UserDto updateUser(@PathVariable String userId, @RequestBody UserCreationParams params) {
+        return userService.updateUser(userId, params);
     }
 
     @DeleteMapping("/users/delete/{userId}")
     public boolean deleteUser(@PathVariable String userId) {
-        return true;
+        return userService.deleteUser(userId);
     }
 }

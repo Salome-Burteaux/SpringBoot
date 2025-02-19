@@ -2,8 +2,10 @@ package com.example.exercie1.Service;
 
 import com.example.exercie1.Entity.User;
 import com.example.exercie1.Entity.UserEntity;
+import com.example.exercie1.UserCreationParams;
 import com.example.exercie1.UserDao;
 import com.example.exercie1.UserDto;
+import com.example.exercie1.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +17,38 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private UserEntityRepository userEntityRepository;
+
+
     @Override
-    public UserEntity createUser(UserEntity userEntity) {
-        return userDao.upsert(userEntity);
+    public UserDto createUser(UserDto userDto, String password) {
+        // Transformer UserDto en entité UserEntity avec le mot de passe
+        UserEntity userEntity = new UserEntity(userDto.getEmail(), password);
+
+        // Sauvegarder l'entité UserEntity dans la base de données
+        UserEntity savedUserEntity = userEntityRepository.save(userEntity);
+
+        // Retourner un UserDto basé sur l'entité sauvegardée
+        return new UserDto(String.valueOf(savedUserEntity.getId()), savedUserEntity.getEmail());
     }
 
     @Override
     public Optional<UserDto> getUserById(String id) {
-        Optional<UserEntity> user  = userDao.findById(id);
-        return Optional.of(new UserDto(user.get().getEmail(), user.get().getId()));
+        Optional<UserEntity> userEntity = userEntityRepository.findById(id);
+        return userEntity.map(u -> new UserDto(String.valueOf(u.getId()), u.getEmail()));
     }
 
     @Override
-    public User updateUser(User user) {
+    public UserDto updateUser(String userId, UserCreationParams params) {
+        Optional<UserEntity> existingUser = userEntityRepository.findById(userId);
+        if (existingUser.isPresent()) {
+            UserEntity userEntity = existingUser.get();
+            userEntity.setEmail(params.getEmail());
+            userEntity.setPassword(params.getPassword());
+            UserEntity updatedUserEntity = userEntityRepository.save(userEntity);
+            return new UserDto(String.valueOf(updatedUserEntity.getId()), updatedUserEntity.getEmail());
+        }
         return null;
     }
 
@@ -35,8 +56,4 @@ public class UserServiceImpl implements UserService {
     public User deleteUser(String id) {
         return null;
     }
-
-
-
-
 }

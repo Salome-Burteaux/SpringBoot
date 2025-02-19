@@ -2,24 +2,23 @@ package com.example.exercie1.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 import java.util.UUID;
 
 @Entity
 public class UserEntity {
 
-    @Id
-    private String id;
-    private @NotNull @Email String email;
-    private @NotNull String password;
+
+    private @Id String id;
+    private @NotEmpty @Email String email;
+    private @NotEmpty String password;
 
     public UserEntity() {
 
     }
 
-    public UserEntity(@NotNull @Email String email, @NotNull String password) {
+    public UserEntity(@NotEmpty @Email String email, @NotEmpty String password) {
 
         this.email = email;
         this.password = password;
