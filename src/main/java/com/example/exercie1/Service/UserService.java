@@ -13,7 +13,7 @@ public interface UserService {
     UserDto createUser(UserDto userDto, String password);
     Optional<UserDto> getUserById(String id);
     UserDto updateUser(String userId, UserCreationParams params);
-    User deleteUser(String id);
+    boolean deleteUser(String id);
 
 
 }
