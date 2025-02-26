@@ -11,9 +11,8 @@ import java.util.Optional;
 public interface UserService {
 
     UserDto createUser(UserDto userDto, String password);
-    Optional<UserDto> getUserById(String id);
+    UserDto getUserById(String id);
     UserDto updateUser(String userId, UserCreationParams params);
     boolean deleteUser(String id);
-
-
+    boolean isValidUser(String userId);
 }

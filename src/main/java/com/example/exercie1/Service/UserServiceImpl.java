@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
     private UserEntityRepository userEntityRepository;
 
 
+
     @Override
     public UserDto createUser(UserDto userDto, String password) {
         // Transformer UserDto en entité UserEntity avec le mot de passe
@@ -34,9 +35,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDto> getUserById(String id) {
-        Optional<UserEntity> userEntity = userEntityRepository.findById(id);
-        return userEntity.map(u -> new UserDto(String.valueOf(u.getId()), u.getEmail()));
+    public UserDto getUserById(String id) {
+        UserEntity userEntity = userEntityRepository.findById(id).orElse(null);
+        return new UserDto(String.valueOf(userEntity.getId()), userEntity.getEmail());
+
+//        Optional<UserEntity> userEntity = userEntityRepository.findById(id);
+//        return userEntity.map(u -> new UserDto(String.valueOf(u.getId()), u.getEmail()));
     }
 
     @Override
@@ -60,5 +64,10 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean isValidUser(String userId) {
+        return userEntityRepository.existsById(userId);
     }
 }

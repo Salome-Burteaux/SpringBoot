@@ -5,6 +5,8 @@ import com.example.exercie1.UserCreationParams;
 import com.example.exercie1.UserDto;
 import com.example.exercie1.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
-    public Optional<UserDto> getUserById(@PathVariable String userId) {
+    public UserDto getUserById(@PathVariable String userId) {
     // get and return user with id 'userId'
         return userService.getUserById(userId);
     }
@@ -38,5 +40,15 @@ public class UserController {
     @DeleteMapping("/users/delete/{userId}")
     public boolean deleteUser(@PathVariable String userId) {
         return userService.deleteUser(userId);
+    }
+
+    @GetMapping("/api/users/validate")
+    public ResponseEntity<Void> validateUser(@RequestHeader("X-UserId") String userId) {
+        boolean isValid = userService.isValidUser(userId);
+        if (isValid) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }
