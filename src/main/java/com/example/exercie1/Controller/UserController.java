@@ -42,8 +42,8 @@ public class UserController {
         return userService.deleteUser(userId);
     }
 
-    @GetMapping("/api/users/validate")
-    public ResponseEntity<Void> validateUser(@RequestHeader("X-UserId") String userId) {
+    @GetMapping("/api/users/validate/{userId}")
+    public ResponseEntity<Void> validateUser(@PathVariable String userId) {
         boolean isValid = userService.isValidUser(userId);
         if (isValid) {
             return ResponseEntity.ok().build();
