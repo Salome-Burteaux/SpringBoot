@@ -22,6 +22,7 @@ public class User {
         this.password = password;
         this.name = name;
         this.role = role != null && role.equals("ADMIN") ? "ADMIN" : "USER";
+
     }
 
     public int getId() {
