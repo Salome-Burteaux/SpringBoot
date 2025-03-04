@@ -19,8 +19,8 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/users")
-    public UserDto createUser(@RequestBody @Valid @Validated UserCreationParams params) {
-        // create a new user
+    public UserDto createUser(@RequestBody @Validated UserCreationParams params) {
+    // create a new user
         UserCreationParams userCreationParams = new UserCreationParams(params.getEmail(), params.getPassword());
         UserDto userDto = new UserDto(params.getId(), params.getEmail());
         return userService.createUser(userDto, params.getPassword());
